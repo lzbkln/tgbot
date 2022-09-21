@@ -10,6 +10,7 @@ public class Main{
         while (true) {
             String s = scanner.nextLine();
             System.out.println(s);
+            System.out.println("4");
         }
     }
 }
