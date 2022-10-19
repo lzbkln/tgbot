@@ -20,7 +20,7 @@ public class Main {
             if (request.data().isEmpty()) {
                 break;
             }
-            Response response = handler.returnResponse(request);
+            Response response = handler.handleRequest(request);
             writer.write(response);
         }
     }

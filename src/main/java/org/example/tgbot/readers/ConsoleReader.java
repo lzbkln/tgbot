@@ -11,7 +11,4 @@ public class ConsoleReader implements Reader {
 
         return new Request(scanner.nextLine());
     }
-
-
 }
-
