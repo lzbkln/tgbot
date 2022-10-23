@@ -1,6 +1,10 @@
 package org.example.tgbot.telegramBot;
 
 import org.example.tgbot.Main;
+import org.example.tgbot.dto.Request;
+import org.example.tgbot.handlers.TelegramHandler;
+import org.example.tgbot.readers.TelegramReader;
+import org.example.tgbot.writers.TelegramWriter;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.CopyMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,21 +12,28 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class TelegramBot extends TelegramLongPollingBot {
-
+    TelegramReader telegramReader;
+    TelegramWriter telegramWriter;
+    TelegramHandler telegramHandler;
+    public TelegramBot() {
+        telegramReader = new TelegramReader();
+        telegramWriter = new TelegramWriter();
+        telegramHandler = new TelegramHandler();
+    }
+    public static final String botName = "RomanceClubGuides";
     @Override
     public String getBotUsername() {
-        return "RomanceClubGuides";
+        return botName;
     }
 
     @Override
     public String getBotToken() {
-        // вернуть токен, только это сделать нужно через файл конфигурации,
-        // чтобы на гитхаб не заливать наш токен
         return Main.getTkFromProperty("config.properties");
     }
 
     @Override
     public void onUpdateReceived(Update update) {
+        Request request = telegramReader.read(update);
         // тестовый вывод в консоль
         System.out.println(update);
         var msg = update.getMessage();
@@ -36,6 +47,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         //эхо ответ
         var id = user.getId();
         copyMessage(id, msg.getMessageId());
+
+        System.out.println(request);
     }
 
     public void copyMessage(Long who, Integer msgId){
