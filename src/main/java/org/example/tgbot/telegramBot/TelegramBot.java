@@ -34,28 +34,22 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Request request = telegramReader.read(update);
-        // тестовый вывод в консоль
+
         System.out.println(update);
         var msg = update.getMessage();
         var user = msg.getFrom();
-        var userName = user.getUserName();
-        var language = user.getLanguageCode();
-
-        System.out.println(user.getFirstName() + " wrote " + msg.getText());
-        System.out.print(userName + ' ' + language);
+        var id = user.getId();
 
         //эхо ответ
-        var id = user.getId();
         copyMessage(id, msg.getMessageId());
-
         System.out.println(request);
     }
 
     public void copyMessage(Long who, Integer msgId){
         CopyMessage cm = CopyMessage.builder()
-                .fromChatId(who.toString())  //We copy from the user
-                .chatId(who.toString())      //And send it back to him
-                .messageId(msgId)            //Specifying what message
+                .fromChatId(who.toString())
+                .chatId(who.toString())
+                .messageId(msgId)
                 .build();
         try {
             execute(cm);
@@ -65,12 +59,12 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
     public void sendText(Long who, String what){
         SendMessage sm = SendMessage.builder()
-                .chatId(who.toString()) //Who are we sending a message to
-                .text(what).build();    //Message content
+                .chatId(who.toString())
+                .text(what).build();
         try {
-            execute(sm);                        //Actually sending the message
+            execute(sm);
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);      //Any error will be printed here
+            throw new RuntimeException(e);
         }
     }
 }
