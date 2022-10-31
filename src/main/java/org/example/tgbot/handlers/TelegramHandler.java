@@ -7,11 +7,11 @@ public class TelegramHandler implements Handler{
     @Override
     public Response handleRequest(Request request) {
         String text;
-        if (request.data().startsWith("/start")) {
+        if (request.getData().startsWith("/start")) {
             text = "Привет, я бот для девочек! Я помогу тебе пройти Клуб Романтики!";
         }
         else {
-            text = request.data();
+            text = request.getData();
         }
         return new Response(text);
     }
