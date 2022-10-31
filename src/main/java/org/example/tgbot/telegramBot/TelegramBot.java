@@ -4,6 +4,7 @@ import org.example.tgbot.Main;
 import org.example.tgbot.dto.Request;
 import org.example.tgbot.dto.Response;
 import org.example.tgbot.handlers.SimpleHandler;
+import org.example.tgbot.handlers.TelegramHandler;
 import org.example.tgbot.readers.TelegramReader;
 import org.example.tgbot.writers.TelegramWriter;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -39,16 +40,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Request request;
         Response response;
-        var msg = update.getMessage();
-        var user = msg.getFrom();
-        var id = user.getId();
-        if (!update.getMessage().hasText()) {
-            System.out.println("It hasn't text");
-            return;
-        }
+
         request = telegramReader.read(update);
         response = simpleHandler.handleRequest(request);
-        SendMessage sendMes = telegramWriter.createMessage(response, id);
+        SendMessage sendMes = telegramWriter.createMessage(response);
         sendMessage(sendMes);
     }
 

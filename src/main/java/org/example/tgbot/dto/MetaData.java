@@ -5,7 +5,10 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class MetaData {
     // в других полях пока нет необходимости
     Long who;
-    MetaData(Message message) {
+    public MetaData(Message message) {
         this.who = message.getFrom().getId();
+    }
+    public Long getFromId() {
+        return who;
     }
 }
