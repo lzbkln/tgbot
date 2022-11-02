@@ -7,12 +7,13 @@ import org.example.tgbot.handlers.SimpleHandler;
 import org.example.tgbot.handlers.TelegramHandler;
 import org.example.tgbot.readers.TelegramReader;
 import org.example.tgbot.writers.TelegramWriter;
+import org.example.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class TelegramBot extends TelegramLongPollingBot {
+public class TelegramBot extends TelegramLongPollingBot implements Writer {
 
     TelegramReader telegramReader;
     TelegramWriter telegramWriter;
@@ -43,12 +44,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         request = telegramReader.read(update);
         response = simpleHandler.handleRequest(request);
-        SendMessage sendMes = telegramWriter.createMessage(response);
-        sendMessage(sendMes);
+        write(response);
     }
 
     //пока только с текстовыми сообщениями
-    public void sendMessage(SendMessage message) {
+    public void write(Response response) {
+        SendMessage message = telegramWriter.createMessage(response);
         try {
             execute(message);
         } catch (TelegramApiException e) {
