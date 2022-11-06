@@ -1,5 +1,7 @@
 package org.example.tgbot.dto;
 
-public record Response(String data) {
-
+public class Response extends Composite {
+    public Response() {
+        super();
+    }
 }
