@@ -1,8 +1,5 @@
 package org.example.tgbot.dto;
 
-public class Request extends Composite {
+public record Request(String data) {
 
-    public Request() {
-        super();
-    }
 }
