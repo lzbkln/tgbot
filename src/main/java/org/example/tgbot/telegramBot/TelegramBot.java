@@ -4,6 +4,7 @@ import org.example.tgbot.Main;
 import org.example.tgbot.dto.Request;
 import org.example.tgbot.dto.Response;
 import org.example.tgbot.handlers.SimpleHandler;
+import org.example.tgbot.handlers.TelegramHandler;
 import org.example.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
