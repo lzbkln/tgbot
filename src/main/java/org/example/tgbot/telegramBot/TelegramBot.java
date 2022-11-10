@@ -4,7 +4,6 @@ import org.example.tgbot.Main;
 import org.example.tgbot.dto.Request;
 import org.example.tgbot.dto.Response;
 import org.example.tgbot.handlers.SimpleHandler;
-import org.example.tgbot.handlers.TelegramHandler;
 import org.example.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,15 +11,18 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class TelegramBot extends TelegramLongPollingBot implements Writer {
+    private final String token;
+    public final String botName;
     SimpleHandler simpleHandler;
     TelegramDataConverter converter;
 
     public TelegramBot() {
+        token = Main.getTkFromProperty("config.properties");
+        botName = "RomanceClubGuides";
+
         converter = new TelegramDataConverter();
         simpleHandler = new SimpleHandler();
     }
-
-    public static final String botName = "RomanceClubGuides";
 
     @Override
     public String getBotUsername() {
@@ -29,7 +31,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
 
     @Override
     public String getBotToken() {
-        return Main.getTkFromProperty("config.properties");
+        return token;
     }
 
     @Override
@@ -39,7 +41,6 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
         write(response);
     }
 
-    //пока только с текстовыми сообщениями
     public void write(Response response) {
         SendMessage message = converter.createMessage(response);
         try {

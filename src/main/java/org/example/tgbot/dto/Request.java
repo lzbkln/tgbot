@@ -1,8 +1,7 @@
 package org.example.tgbot.dto;
 
-public class Request extends Composite {
+public class Request extends ComponentContainer {
 
     public Request() {
-        super();
     }
 }

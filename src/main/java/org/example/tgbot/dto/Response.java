@@ -1,7 +1,6 @@
 package org.example.tgbot.dto;
 
-public class Response extends Composite {
+public class Response extends ComponentContainer {
     public Response() {
-        super();
     }
 }
