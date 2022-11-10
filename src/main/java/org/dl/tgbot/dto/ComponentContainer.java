@@ -1,4 +1,4 @@
-package org.example.tgbot.dto;
+package org.dl.tgbot.dto;
 
 import java.util.HashSet;
 import java.util.Set;

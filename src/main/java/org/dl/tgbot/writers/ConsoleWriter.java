@@ -1,7 +1,7 @@
-package org.example.tgbot.writers;
+package org.dl.tgbot.writers;
 
-import org.example.tgbot.dto.Response;
-import org.example.tgbot.dto.TextComponent;
+import org.dl.tgbot.dto.Response;
+import org.dl.tgbot.dto.TextComponent;
 
 public class ConsoleWriter implements Writer {
     @Override

@@ -1,4 +1,4 @@
-package org.example.tgbot.dto;
+package org.dl.tgbot.dto;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
 

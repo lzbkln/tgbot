@@ -1,4 +1,4 @@
-package org.example.tgbot.dto;
+package org.dl.tgbot.dto;
 
 public class TextComponent implements Component {
     private final String text;

@@ -1,7 +1,7 @@
-package org.example.tgbot.readers;
+package org.dl.tgbot.readers;
 
-import org.example.tgbot.dto.Request;
-import org.example.tgbot.dto.TextComponent;
+import org.dl.tgbot.dto.Request;
+import org.dl.tgbot.dto.TextComponent;
 
 import java.util.Scanner;
 

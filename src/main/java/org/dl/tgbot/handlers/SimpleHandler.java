@@ -1,9 +1,9 @@
-package org.example.tgbot.handlers;
+package org.dl.tgbot.handlers;
 
-import org.example.tgbot.dto.MetaData;
-import org.example.tgbot.dto.Request;
-import org.example.tgbot.dto.Response;
-import org.example.tgbot.dto.TextComponent;
+import org.dl.tgbot.dto.MetaData;
+import org.dl.tgbot.dto.Request;
+import org.dl.tgbot.dto.Response;
+import org.dl.tgbot.dto.TextComponent;
 
 public class SimpleHandler implements Handler {
     public Response handleRequest(Request request) {

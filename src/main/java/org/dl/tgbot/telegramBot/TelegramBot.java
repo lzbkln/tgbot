@@ -1,10 +1,10 @@
-package org.example.tgbot.telegramBot;
+package org.dl.tgbot.telegramBot;
 
-import org.example.tgbot.Main;
-import org.example.tgbot.dto.Request;
-import org.example.tgbot.dto.Response;
-import org.example.tgbot.handlers.SimpleHandler;
-import org.example.tgbot.writers.Writer;
+import org.dl.tgbot.Main;
+import org.dl.tgbot.dto.Request;
+import org.dl.tgbot.dto.Response;
+import org.dl.tgbot.handlers.SimpleHandler;
+import org.dl.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;

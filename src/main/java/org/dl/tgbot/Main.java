@@ -1,7 +1,7 @@
-package org.example.tgbot;
+package org.dl.tgbot;
 
 
-import org.example.tgbot.telegramBot.TelegramBot;
+import org.dl.tgbot.telegramBot.TelegramBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;

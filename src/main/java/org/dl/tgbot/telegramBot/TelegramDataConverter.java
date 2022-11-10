@@ -1,9 +1,9 @@
-package org.example.tgbot.telegramBot;
+package org.dl.tgbot.telegramBot;
 
-import org.example.tgbot.dto.MetaData;
-import org.example.tgbot.dto.Request;
-import org.example.tgbot.dto.Response;
-import org.example.tgbot.dto.TextComponent;
+import org.dl.tgbot.dto.MetaData;
+import org.dl.tgbot.dto.Request;
+import org.dl.tgbot.dto.Response;
+import org.dl.tgbot.dto.TextComponent;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
