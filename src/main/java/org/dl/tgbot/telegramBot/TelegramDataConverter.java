@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class TelegramDataConverter {
-    public Request read(Update update) {
+    public Request convertToRequest(Update update) {
         Message msg = update.getMessage();
 
         Request request = new Request();
@@ -20,7 +20,7 @@ public class TelegramDataConverter {
         return request;
     }
 
-    public SendMessage createMessage(Response response) {
+    public SendMessage convertFromResponse(Response response) {
         Long who = response.getComponent(MetaData.class).getUserId();
 
         return SendMessage.builder()

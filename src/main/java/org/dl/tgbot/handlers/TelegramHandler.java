@@ -9,13 +9,15 @@ public class TelegramHandler implements Handler {
     @Override
     public Response handleRequest(Request request) {
         String text;
-        
-        if (request.getComponent(TextComponent.class).getText() == null) {
+        String msg;
+        msg = request.getComponent(TextComponent.class).getText();
+
+        if (msg == null) {
             text = "Мы друг друга не поняли, отправьте текстовое сообщение";
-        } else if (request.getComponent(TextComponent.class).getText().startsWith("/start")) {
-            text = "Привет, я бот для девочек! Я помогу тебе пройти Клуб Романтики!";
+        } else if (msg.startsWith("/start")) {
+            text = "Привет, я бот, который поможет тебе пройти Клуб Романтики!";
         } else {
-            text = request.getComponent(TextComponent.class).getText();
+            text = msg;
         }
 
         Response response = new Response();

@@ -21,9 +21,7 @@ public class Main {
                      new FileInputStream("src/main/resources/" + fileName)) {
             property.load(fis);
         } catch (IOException e) {
-            System.err.println("ОШИБКА: Файл свойств отсуствует!");
-            //бот должен упасть, если нет конфиг файла
-            throw new RuntimeException();
+            throw new RuntimeException("Конфигурационный файл отсутствует!", e);
         }
 
         return property.getProperty("token");
