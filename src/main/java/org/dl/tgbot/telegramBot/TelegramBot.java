@@ -1,6 +1,5 @@
 package org.dl.tgbot.telegramBot;
 
-import org.dl.tgbot.Main;
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.handlers.TelegramHandler;
@@ -16,9 +15,9 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
     TelegramHandler telegramHandler;
     TelegramDataConverter converter;
 
-    public TelegramBot() {
-        token = Main.getTkFromProperty("config.properties");
-        botName = "RomanceClubGuides";
+    public TelegramBot(String token, String botName) {
+        this.token = token;
+        this.botName = botName;
 
         converter = new TelegramDataConverter();
         telegramHandler = new TelegramHandler();

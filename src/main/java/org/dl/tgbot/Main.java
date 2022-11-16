@@ -29,7 +29,7 @@ public class Main {
 
     private static void startTgBot() throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        TelegramBot bot = new TelegramBot();
+        TelegramBot bot = new TelegramBot(Main.getTkFromProperty("config.properties"), "RomanceClubGuides");
         botsApi.registerBot(bot);
     }
 }
