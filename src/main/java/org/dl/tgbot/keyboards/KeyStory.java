@@ -14,13 +14,13 @@ public class KeyStory extends Keyboard {
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
 
 
-        String[] test = {"ис", "прпрпр", " fvgfrgv", "fejje", "bdssjdm", "ffjjfjf", "ffjfjfj", "fjfjfjf", "jfjffjkffk", "jjfjfkfkf", "ис", "прпрпр", " fvgfrgv", "fejje", "bdssjdm", "ffjjfjf", "ffjfjfj", "fjfjfjf", "jfjffjkffk", "jjfjfkfkf", "ис", "прпрпр", " fvgfrgv", "fejje", "bdssjdm", "ffjjfjf", "ffjfjfj", "fjfjfjf", "jfjffjkffk", "jjfjfkfkf", "ис", "прпрпр", " fvgfrgv", "fejje", "bdssjdm", "ffjjfjf", "ffjfjfj", "fjfjfjf", "jfjffjkffk", "jjfjfkfkf"};
-        for (var i = 0; i < test.length; i++) {
+        String[] test = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth"};
+        for (String s : test) {
             List<InlineKeyboardButton> rows = new ArrayList<>();
             rows.add(InlineKeyboardButton
                     .builder()
-                    .text(test[i])
-                    .callbackData(test[i])
+                    .text(s)
+                    .callbackData(s)
                     .build());
             buttons.add(rows);
         }

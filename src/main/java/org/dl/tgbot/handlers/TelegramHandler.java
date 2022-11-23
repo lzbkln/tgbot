@@ -13,13 +13,18 @@ public class TelegramHandler implements Handler {
         String text;
         String msg;
         msg = request.getComponent(TextComponent.class).getText();
-
+        String fileName = "phrases.properties";
         if (msg == null) {
-            text = Main.getFromProperty("phrases.properties", "text1");
-        } else if (msg.startsWith("/start")) {
-            text = Main.getFromProperty("phrases.properties", "text2");
+            text = Main.getFromProperty(fileName, "message.unknownInput");
+        } else if (msg.startsWith("/")) {
+            if (msg.startsWith("/start")) {
+                text = Main.getFromProperty(fileName, "message.start");
+            }
+            else {
+                text = Main.getFromProperty(fileName, "message.unknownCommand");
+            }
         } else if (msg.startsWith("Помощь")) {
-            text = Main.getFromProperty("phrases.properties", "text3");
+            text = Main.getFromProperty(fileName, "message.help");
         }
         else {
             text = msg;

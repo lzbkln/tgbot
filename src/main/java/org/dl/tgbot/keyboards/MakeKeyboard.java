@@ -10,7 +10,7 @@ public class MakeKeyboard extends Keyboard{
     public static void createKeyboard(long userId) {
 
         message.setChatId(userId);
-        message.setText(Main.getFromProperty("phrases.properties", "text2"));
+        message.setText(Main.getFromProperty("phrases.properties", "message.start"));
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyboard = new ArrayList<>();

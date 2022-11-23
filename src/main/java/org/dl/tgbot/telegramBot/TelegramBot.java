@@ -9,7 +9,9 @@ import org.dl.tgbot.keyboards.KeyStory;
 import org.dl.tgbot.keyboards.MakeKeyboard;
 import org.dl.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -45,30 +47,41 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
             Response response = telegramHandler.handleRequest(request);
             write(response);
         } else if (update.hasCallbackQuery()){
-            /*
+            //пока просто БОТ заменяет клавиатуру на текст
             String call_data = update.getCallbackQuery().getData();
             long message_id = update.getCallbackQuery().getMessage().getMessageId();
             long chat_id = update.getCallbackQuery().getMessage().getChatId();
+            // пропишем Data для каждой кнопки при создании в keyStory
+            // сделаем две кнопки, чтобы листать истории
+            String callbackQueryId = update.getCallbackQuery().getId();
+            System.out.println(call_data);
+            System.out.println(message_id);
+            System.out.println(chat_id);
 
-            if (call_data.equals("update_msg_text")) {
-                String answer = "Updated message text";
-                EditMessageText new_message = new EditMessageText()
-                        .setChatId(chat_id)
-                        .setMessageId(toIntExact(message_id))
-                        .setText(answer);
+            // ответ на колбэк, он может быть пустой, а может быть и с текстом
+            AnswerCallbackQuery ansCallback = new AnswerCallbackQuery();
+            ansCallback.setText("Это ответ");
+            ansCallback.setCallbackQueryId(callbackQueryId);
+            if (call_data.equals("First")) {
+                String answer = "AnswerFirst";
+                EditMessageText new_message = new EditMessageText();
+                new_message.setChatId(chat_id);
+                new_message.setMessageId((int) message_id);
+                new_message.setText(answer);
                 try {
                     execute(new_message);
+                    // телеграм требует дополнительно отправлять ответ на коллбэк
+                    execute(ansCallback);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
             }
-           */
         }
     }
 
     public void write(Response response) {
         SendMessage message = converter.convertFromResponse(response);
-        if (message.getText().equals(Main.getFromProperty("phrases.properties", "text2"))){
+        if (message.getText().equals(Main.getFromProperty("phrases.properties", "message.start"))){
             MakeKeyboard.createKeyboard(MetaData.userId);
             try {
                 execute(MakeKeyboard.message);
