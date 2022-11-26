@@ -17,10 +17,11 @@ public class CommandContainer {
      * Плохо, что передаем несколько сервисов
      * Может, изменить логику сервиса? Тогда не придется передавать несколько сервисов
      * Изменить так: определять выводимую строку внутри сервиса?
+     * Другой варинат: добавить новый метод в Receiver (CreateMessegeService)
      * @param createMessageService Сервис, осуществляющий логику
      */
     public CommandContainer(CreateMessageService createMessageService, CreateMessageService createMessageService1) {
-
+        // сделать автозаполнение
         commandMap = ImmutableMap.<String, Command>builder()
                 .put(START.getCommandName(), new StartCommand(createMessageService))
                 .put(HELP.getCommandName(), new HelpCommand(createMessageService))
