@@ -5,13 +5,12 @@ import org.dl.tgbot.dto.MetaData;
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.handlers.TelegramHandler;
+import org.dl.tgbot.handlers.report;
 import org.dl.tgbot.keyboards.KeyStory;
 import org.dl.tgbot.keyboards.MakeKeyboard;
 import org.dl.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -46,8 +45,9 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
             Request request = converter.convertToRequest(update);
             Response response = telegramHandler.handleRequest(request);
             write(response);
-        } else if (update.hasCallbackQuery()){
-            //пока просто БОТ заменяет клавиатуру на текст
+        } /* else if (update.hasCallbackQuery()) {
+            // предлагаю обрабатывать колбэки через отдельный CallbackHandler
+            // пока просто БОТ заменяет клавиатуру на текст
             String call_data = update.getCallbackQuery().getData();
             long message_id = update.getCallbackQuery().getMessage().getMessageId();
             long chat_id = update.getCallbackQuery().getMessage().getChatId();
@@ -77,22 +77,27 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
                 }
             }
         }
+        */
     }
 
     public void write(Response response) {
         SendMessage message = converter.convertFromResponse(response);
-        if (message.getText().equals(Main.getFromProperty("phrases.properties", "message.start"))){
-            MakeKeyboard.createKeyboard(MetaData.userId);
+        // получаем метаданные из response (вот как нужно делать, а не менять приватные поля MetaData на публичные)
+        MetaData metaData = response.getComponent(MetaData.class);
+
+        //вся логика должна быть в Handler, возможно нужно создать новый handler для клавиатур
+        if (message.getText().equals(Main.getPhrase("phrases", report.HELP.message, "ru", "RU"))) {
+            MakeKeyboard.createKeyboard(metaData.getUserId());
             try {
                 execute(MakeKeyboard.message);
-            } catch (TelegramApiException e){
+            } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (message.getText().equals("Истории")){
-            KeyStory.createStoryKey(MetaData.userId);
+        } else if (message.getText().equals("Истории")) {
+            KeyStory.createStoryKey(metaData.getUserId());
             try {
                 execute(MakeKeyboard.message);
-            } catch (TelegramApiException e){
+            } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
         } else {

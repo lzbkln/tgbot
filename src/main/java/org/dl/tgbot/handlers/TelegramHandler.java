@@ -8,23 +8,31 @@ import org.dl.tgbot.dto.TextComponent;
 
 
 public class TelegramHandler implements Handler {
+
     @Override
     public Response handleRequest(Request request) {
+        String COMMAND_PREFIX = "/";
+
         String text;
         String msg;
         msg = request.getComponent(TextComponent.class).getText();
-        String fileName = "phrases.properties";
+        String fileName = "phrases";
+        // переписать работу с командами на паттерны Команда
         if (msg == null) {
-            text = Main.getFromProperty(fileName, "message.unknownInput");
-        } else if (msg.startsWith("/")) {
+            text = Main.getPhrase(fileName, report.UNKNOWN_INPUT.message, "ru", "RU");
+        } else if (msg.startsWith(COMMAND_PREFIX)) {
             if (msg.startsWith("/start")) {
-                text = Main.getFromProperty(fileName, "message.start");
+                text = Main.getPhrase(fileName, report.START.message, "ru", "RU");
+            } else if (msg.startsWith("/help")) {
+                text = Main.getPhrase(fileName, report.HELP.message, "ru", "RU");
+            } else if (msg.startsWith("/stories")) {
+                text = "Тут будут истории";
             }
             else {
-                text = Main.getFromProperty(fileName, "message.unknownCommand");
+                text = Main.getPhrase(fileName, report.UNKNOWN_COMMAND.message, "ru", "RU");
             }
         } else if (msg.startsWith("Помощь")) {
-            text = Main.getFromProperty(fileName, "message.help");
+            text = Main.getPhrase(fileName, report.HELP.message, "ru", "RU");
         }
         else {
             text = msg;
