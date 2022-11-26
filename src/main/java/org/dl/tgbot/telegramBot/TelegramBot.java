@@ -86,7 +86,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
         MetaData metaData = response.getComponent(MetaData.class);
 
         //вся логика должна быть в Handler, возможно нужно создать новый handler для клавиатур
-        if (message.getText().equals(Main.getPhrase("phrases", report.HELP.message, "ru", "RU"))) {
+        if (message.getText().equals(Main.getPhrase("phrases", report.START.message, "ru", "RU"))) {
             MakeKeyboard.createKeyboard(metaData.getUserId());
             try {
                 execute(MakeKeyboard.message);

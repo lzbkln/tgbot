@@ -1,10 +1,10 @@
 package org.dl.tgbot.handlers;
 
-import org.dl.tgbot.Main;
-import org.dl.tgbot.dto.MetaData;
+import org.dl.tgbot.command.CommandContainer;
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.dto.TextComponent;
+import org.dl.tgbot.service.CreateMessageServiceImpl;
 
 
 public class TelegramHandler implements Handler {
@@ -12,10 +12,11 @@ public class TelegramHandler implements Handler {
     @Override
     public Response handleRequest(Request request) {
         String COMMAND_PREFIX = "/";
-
-        String text;
         String msg;
         msg = request.getComponent(TextComponent.class).getText();
+        /*
+        String text;
+
         String fileName = "phrases";
         // переписать работу с командами на паттерны Команда
         if (msg == null) {
@@ -42,6 +43,19 @@ public class TelegramHandler implements Handler {
         response.addComponent(new TextComponent(text));
         response.addComponent(request.getComponent(MetaData.class));
 
+        */
+        Response response = new Response();
+        CommandContainer commandContainer = new CommandContainer(new CreateMessageServiceImpl());
+        if (msg == null) {
+        }
+        else if (msg.startsWith(COMMAND_PREFIX)) {
+            String commandIdentifier = msg.split(" ")[0].toLowerCase();
+            response = commandContainer.retrieveCommand(commandIdentifier).execute(request);
+        } else {
+
+        }
+
         return response;
+
     }
 }
