@@ -1,10 +1,12 @@
 package org.dl.tgbot.handlers;
 
 import org.dl.tgbot.command.CommandContainer;
+import org.dl.tgbot.command.CommandName;
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.dto.TextComponent;
 import org.dl.tgbot.service.CreateMessageServiceImpl;
+import org.dl.tgbot.service.CreateStoriesMessageServiceImpl;
 
 
 public class TelegramHandler implements Handler {
@@ -44,15 +46,16 @@ public class TelegramHandler implements Handler {
         response.addComponent(request.getComponent(MetaData.class));
 
         */
-        Response response = new Response();
-        CommandContainer commandContainer = new CommandContainer(new CreateMessageServiceImpl());
+        Response response;
+        CommandContainer commandContainer = new CommandContainer(new CreateMessageServiceImpl(), new CreateStoriesMessageServiceImpl());
         if (msg == null) {
+            response = commandContainer.retrieveCommand(CommandName.NO.getCommandName()).execute(request);
         }
         else if (msg.startsWith(COMMAND_PREFIX)) {
             String commandIdentifier = msg.split(" ")[0].toLowerCase();
             response = commandContainer.retrieveCommand(commandIdentifier).execute(request);
         } else {
-
+            response = commandContainer.retrieveCommand(CommandName.NO.getCommandName()).execute(request);
         }
 
         return response;

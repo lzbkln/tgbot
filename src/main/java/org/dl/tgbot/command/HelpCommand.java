@@ -11,7 +11,7 @@ public class HelpCommand implements Command{
     public HelpCommand(CreateMessageService createMessageService) {
         this.createMessageService = createMessageService;
     }
-
+    @Override
     public Response execute(Request request) {
         return createMessageService.createTextMessage(request, report.HELP.message);
     }
