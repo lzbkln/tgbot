@@ -1,13 +1,11 @@
 package org.dl.tgbot.telegramBot;
 
-import org.dl.tgbot.dto.MetaData;
-import org.dl.tgbot.dto.Request;
-import org.dl.tgbot.dto.Response;
-import org.dl.tgbot.dto.TextComponent;
+import org.dl.tgbot.dto.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 public class TelegramDataConverter {
     public Request convertToRequest(Update update) {
@@ -22,10 +20,12 @@ public class TelegramDataConverter {
 
     public SendMessage convertFromResponse(Response response) {
         Long who = response.getComponent(MetaData.class).getUserId();
-
+        InlineKeyboardMarkup markup = response.getComponent(KeyboardComponent.class).getMarkup();
+        // любой из аргументов может быть null, кроме chatId
         return SendMessage.builder()
                 .chatId(who.toString())
                 .text(response.getComponent(TextComponent.class).getText())
+                .replyMarkup(markup)
                 .build();
     }
 }
