@@ -20,7 +20,10 @@ public class TelegramDataConverter {
 
     public SendMessage convertFromResponse(Response response) {
         Long who = response.getComponent(MetaData.class).getUserId();
-        InlineKeyboardMarkup markup = response.getComponent(KeyboardComponent.class).getMarkup();
+        InlineKeyboardMarkup markup = null;
+        if (response.getComponent(KeyboardComponent.class) != null) {
+            markup = response.getComponent(KeyboardComponent.class).getMarkup();
+        }
         // любой из аргументов может быть null, кроме chatId
         return SendMessage.builder()
                 .chatId(who.toString())
