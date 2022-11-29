@@ -9,7 +9,7 @@ public class Story implements Page {
     protected static String name;
 
     public HashMap<String, String> makeDictNames() throws FileNotFoundException {
-        String path = "C:/Users/lzbkl/IdeaProjects/tgbot/src/main/resources/stories";
+        String path = "./src/main/resources/stories";
         File file = new File(path);
         Scanner scannerF = new Scanner(file);
         HashMap<String, String> linkNames = new HashMap<>();

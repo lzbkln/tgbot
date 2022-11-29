@@ -16,6 +16,7 @@ public class TelegramHandler implements Handler {
         String COMMAND_PREFIX = "/";
         String msg;
         msg = request.getComponent(TextComponent.class).getText();
+        // Старый вариант обработки команд
         /*
         String text;
 
@@ -47,6 +48,7 @@ public class TelegramHandler implements Handler {
 
         */
         Response response;
+        // Передаём два сервиса. А если их нужно передать больше?
         CommandContainer commandContainer = new CommandContainer(new CreateMessageServiceImpl(), new CreateStoriesMessageServiceImpl());
         if (msg == null) {
             response = commandContainer.retrieveCommand(CommandName.NO.getCommandName()).execute(request);

@@ -20,6 +20,7 @@ public class TelegramDataConverter {
 
     public SendMessage convertFromResponse(Response response) {
         Long who = response.getComponent(MetaData.class).getUserId();
+        // тут тоже привязка к телеграму
         InlineKeyboardMarkup markup = null;
         if (response.getComponent(KeyboardComponent.class) != null) {
             markup = response.getComponent(KeyboardComponent.class).getMarkup();

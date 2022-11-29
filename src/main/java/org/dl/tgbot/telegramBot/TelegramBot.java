@@ -1,18 +1,20 @@
 package org.dl.tgbot.telegramBot;
 
-import org.dl.tgbot.Main;
+import org.dl.tgbot.command.CommandName;
 import org.dl.tgbot.dto.MetaData;
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.handlers.TelegramHandler;
-import org.dl.tgbot.handlers.report;
-import org.dl.tgbot.keyboards.KeyStory;
-import org.dl.tgbot.keyboards.MakeKeyboard;
 import org.dl.tgbot.writers.Writer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TelegramBot extends TelegramLongPollingBot implements Writer {
@@ -27,8 +29,23 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
 
         converter = new TelegramDataConverter();
         telegramHandler = new TelegramHandler();
+        // так создавать меню?
+        initCommandMenu();
     }
-
+    private void initCommandMenu() {
+        List<BotCommand> commandList = new ArrayList<>();
+        for (CommandName commandName: CommandName.values()) {
+            if (commandName != CommandName.NO)
+                commandList.add(new BotCommand(commandName.getCommandName(), "Что-то сделать"));
+        }
+        SetMyCommands commands = new SetMyCommands();
+        commands.setCommands(commandList);
+        try {
+            this.execute(commands);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public String getBotUsername() {
         return botName;
@@ -42,11 +59,12 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
+            System.out.println(update);
             Request request = converter.convertToRequest(update);
             Response response = telegramHandler.handleRequest(request);
             write(response);
         } /* else if (update.hasCallbackQuery()) {
-            // предлагаю обрабатывать колбэки через отдельный CallbackHandler
+            // предлагаю обрабатывать коллбэки через отдельный CallbackHandler
             // пока просто БОТ заменяет клавиатуру на текст
             String call_data = update.getCallbackQuery().getData();
             long message_id = update.getCallbackQuery().getMessage().getMessageId();
@@ -58,7 +76,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
             System.out.println(message_id);
             System.out.println(chat_id);
 
-            // ответ на колбэк, он может быть пустой, а может быть и с текстом
+            // ответ на коллбэк, он может быть пустой, а может быть и с текстом
             AnswerCallbackQuery ansCallback = new AnswerCallbackQuery();
             ansCallback.setText("Это ответ");
             ansCallback.setCallbackQueryId(callbackQueryId);
@@ -86,15 +104,10 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
         MetaData metaData = response.getComponent(MetaData.class);
 
         //вся логика должна быть в Handler, возможно нужно создать новый handler для клавиатур
+        /*
         if (message.getText().equals(Main.getPhrase("phrases", report.START.message, "ru", "RU"))) {
+
             MakeKeyboard.createKeyboard(metaData.getUserId());
-            try {
-                execute(MakeKeyboard.message);
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-        } else if (message.getText().equals("Истории")) {
-            KeyStory.createStoryKey(metaData.getUserId());
             try {
                 execute(MakeKeyboard.message);
             } catch (TelegramApiException e) {
@@ -106,6 +119,13 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
+        }
+
+         */
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
         }
     }
 }

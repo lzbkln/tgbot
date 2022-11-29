@@ -10,6 +10,7 @@ public class CreateMessageServiceImpl implements CreateMessageService{
 
     @Override
     public Response createTextMessage(Request request, String ans) {
+        // что делать с такими константами?
         String text;
         String fileName = "phrases";
         text = Main.getPhrase(fileName, ans, "ru", "RU");

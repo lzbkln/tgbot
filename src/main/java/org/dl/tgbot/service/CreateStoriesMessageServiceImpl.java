@@ -12,11 +12,10 @@ import java.util.List;
 public class CreateStoriesMessageServiceImpl implements CreateMessageService{
     @Override
     public Response createTextMessage(Request request, String ans) {
-        // todo: привязываемся к телеграму
+        // из-за клавиатуры происходит привязка к телеграмму
 
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-        // todo: вставить логику сюда возвращать тут названия историй через какой-то метод
 
         Story story = new Story();
         ArrayList<String> test;

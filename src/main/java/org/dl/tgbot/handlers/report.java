@@ -1,6 +1,7 @@
 package org.dl.tgbot.handlers;
 
 public enum report {
+    // переименовать
     UNKNOWN_INPUT(0, "message.unknownInput"),
     START(1, "message.start"),
     HELP(2, "message.help"),
