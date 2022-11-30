@@ -2,34 +2,32 @@ package org.dl.tgbot.command;
 
 import com.google.common.collect.ImmutableMap;
 import org.dl.tgbot.service.CreateMessageService;
+import org.dl.tgbot.service.CreateStoriesMessageService;
+
+import java.util.Map;
 
 import static org.dl.tgbot.command.CommandName.*;
 
 
 public class CommandContainer {
-
-    private final ImmutableMap<String, Command> commandMap;
+    private final Map<String, Command> commandMap;
     private final Command unknownCommand;
 
 
     /**
-     * Что делать если хочется и другие Service?
-     * Плохо, что передаем несколько сервисов&
-     * Может, изменить логику сервиса? Тогда не придется передавать несколько сервисов
-     * Изменить так: определять выводимую строку внутри сервиса?
-     * Другой варинат: добавить новый метод в Receiver (CreateMessegeService)
-     * @param createMessageService Сервис, осуществляющий логику
+     *
+     * @param createReportMessageService Сервис, осуществляющий логику отправки заготовленных фраз
+     * @param createStoriesMessageService Сервис, осуществляющий логику создания сообщения с историями
      */
-    public CommandContainer(CreateMessageService createMessageService, CreateMessageService createMessageService1) {
-        // сделать автозаполнение
+    public CommandContainer(CreateMessageService createReportMessageService, CreateStoriesMessageService createStoriesMessageService) {
         commandMap = ImmutableMap.<String, Command>builder()
-                .put(START.getCommandName(), new StartCommand(createMessageService))
-                .put(HELP.getCommandName(), new HelpCommand(createMessageService))
-                .put(NO.getCommandName(), new NoCommand(createMessageService))
-                .put(STORIES.getCommandName(), new StoriesCommand(createMessageService1))
+                .put(START.getCommandName(), new StartCommand(createReportMessageService))
+                .put(HELP.getCommandName(), new HelpCommand(createReportMessageService))
+                .put(NO.getCommandName(), new NoCommand(createReportMessageService))
+                .put(STORIES.getCommandName(), new StoriesCommand(createStoriesMessageService))
                 .build();
 
-        unknownCommand = new UnknownCommand(createMessageService);
+        unknownCommand = new UnknownCommand(createReportMessageService);
     }
 
     /**

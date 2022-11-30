@@ -9,10 +9,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateStoriesMessageServiceImpl implements CreateMessageService{
+public class CreateStoriesMessageService implements CreateMessageService{
     @Override
     public Response createTextMessage(Request request, String ans) {
-        // из-за клавиатуры происходит привязка к телеграмму
+        // TODO: переписать, чтобы не было привязки к клавиатуре телеграмма
 
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();

@@ -6,18 +6,20 @@ import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.dto.TextComponent;
 
-public class CreateMessageServiceImpl implements CreateMessageService{
+import static org.dl.tgbot.Constants.PHRASES_FILENAME;
+
+public class CreateReportMessageService implements CreateMessageService{
 
     @Override
     public Response createTextMessage(Request request, String ans) {
-        // что делать с такими константами?
-        String text;
-        String fileName = "phrases";
-        text = Main.getPhrase(fileName, ans, "ru", "RU");
 
+        String text;
+        text = Main.getPhrase(PHRASES_FILENAME, ans, "ru", "RU");
+
+        // TODO: вынести следующие две строки в метод, либо сделать конструктор с параметром MetaData
         Response response = new Response();
-        response.addComponent(new TextComponent(text));
         response.addComponent(request.getComponent(MetaData.class));
+        response.addComponent(new TextComponent(text));
 
         return response;
     }

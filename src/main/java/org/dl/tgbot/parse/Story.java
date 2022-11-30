@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Story implements Page {
     protected static String name;
-
+    // TODO: переписать парсинг страницы, чтобы не использовался файл
     public HashMap<String, String> makeDictNames() throws FileNotFoundException {
         String path = "./src/main/resources/stories";
         File file = new File(path);

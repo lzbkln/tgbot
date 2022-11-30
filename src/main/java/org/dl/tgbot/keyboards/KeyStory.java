@@ -7,6 +7,9 @@ import java.util.List;
 
 public class KeyStory extends Keyboard {
     public static void createStoryKey(long userId) {
+        // TODO: переписать так, чтобы в этом методе
+        //  создавалась клавиатура на основе переписанного KeyboardComponent
+
         message.setChatId(userId);
         message.setText("Выберите историю");
 

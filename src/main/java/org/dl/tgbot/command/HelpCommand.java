@@ -2,7 +2,7 @@ package org.dl.tgbot.command;
 
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
-import org.dl.tgbot.handlers.report;
+import org.dl.tgbot.handlers.Report;
 import org.dl.tgbot.service.CreateMessageService;
 
 public class HelpCommand implements Command{
@@ -13,6 +13,6 @@ public class HelpCommand implements Command{
     }
     @Override
     public Response execute(Request request) {
-        return createMessageService.createTextMessage(request, report.HELP.message);
+        return createMessageService.createTextMessage(request, Report.HELP.message);
     }
 }

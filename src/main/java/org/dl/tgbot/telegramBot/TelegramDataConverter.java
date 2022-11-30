@@ -20,12 +20,11 @@ public class TelegramDataConverter {
 
     public SendMessage convertFromResponse(Response response) {
         Long who = response.getComponent(MetaData.class).getUserId();
-        // тут тоже привязка к телеграму
+        // TODO: использовать переписанный KeyboardComponent, преобразовывать его в inline-клавиатуру
         InlineKeyboardMarkup markup = null;
         if (response.getComponent(KeyboardComponent.class) != null) {
             markup = response.getComponent(KeyboardComponent.class).getMarkup();
         }
-        // любой из аргументов может быть null, кроме chatId
         return SendMessage.builder()
                 .chatId(who.toString())
                 .text(response.getComponent(TextComponent.class).getText())

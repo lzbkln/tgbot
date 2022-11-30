@@ -1,7 +1,6 @@
 package org.dl.tgbot.telegramBot;
 
 import org.dl.tgbot.command.CommandName;
-import org.dl.tgbot.dto.MetaData;
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
 import org.dl.tgbot.handlers.TelegramHandler;
@@ -29,14 +28,13 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
 
         converter = new TelegramDataConverter();
         telegramHandler = new TelegramHandler();
-        // так создавать меню?
         initCommandMenu();
     }
     private void initCommandMenu() {
         List<BotCommand> commandList = new ArrayList<>();
         for (CommandName commandName: CommandName.values()) {
             if (commandName != CommandName.NO)
-                commandList.add(new BotCommand(commandName.getCommandName(), "Что-то сделать"));
+                commandList.add(new BotCommand(commandName.getCommandName(), commandName.getCommandDescription()));
         }
         SetMyCommands commands = new SetMyCommands();
         commands.setCommands(commandList);
@@ -60,11 +58,13 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             System.out.println(update);
+            // TODO: возможно, сделать конвертер фасадом
             Request request = converter.convertToRequest(update);
             Response response = telegramHandler.handleRequest(request);
             write(response);
-        } /* else if (update.hasCallbackQuery()) {
-            // предлагаю обрабатывать коллбэки через отдельный CallbackHandler
+        }
+        /* else if (update.hasCallbackQuery()) {
+            // TODO: перенести обработку в TelegramHandler, проверять там на CallBack и обрабатывать
             // пока просто БОТ заменяет клавиатуру на текст
             String call_data = update.getCallbackQuery().getData();
             long message_id = update.getCallbackQuery().getMessage().getMessageId();
@@ -87,6 +87,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
                 new_message.setMessageId((int) message_id);
                 new_message.setText(answer);
                 try {
+                //
                     execute(new_message);
                     // телеграм требует дополнительно отправлять ответ на коллбэк
                     execute(ansCallback);
@@ -100,28 +101,6 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
 
     public void write(Response response) {
         SendMessage message = converter.convertFromResponse(response);
-        // получаем метаданные из response (вот как нужно делать, а не менять приватные поля MetaData на публичные)
-        MetaData metaData = response.getComponent(MetaData.class);
-
-        //вся логика должна быть в Handler, возможно нужно создать новый handler для клавиатур
-        /*
-        if (message.getText().equals(Main.getPhrase("phrases", report.START.message, "ru", "RU"))) {
-
-            MakeKeyboard.createKeyboard(metaData.getUserId());
-            try {
-                execute(MakeKeyboard.message);
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            try {
-                execute(message);
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-         */
         try {
             execute(message);
         } catch (TelegramApiException e) {

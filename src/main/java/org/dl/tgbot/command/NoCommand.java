@@ -2,7 +2,7 @@ package org.dl.tgbot.command;
 
 import org.dl.tgbot.dto.Request;
 import org.dl.tgbot.dto.Response;
-import org.dl.tgbot.handlers.report;
+import org.dl.tgbot.handlers.Report;
 import org.dl.tgbot.service.CreateMessageService;
 
 
@@ -14,6 +14,6 @@ public class NoCommand implements Command {
     }
     @Override
     public Response execute(Request request) {
-        return createMessageService.createTextMessage(request, report.UNKNOWN_INPUT.message);
+        return createMessageService.createTextMessage(request, Report.UNKNOWN_INPUT.message);
     }
 }
