@@ -11,7 +11,7 @@ public class CreateStoriesMessageService implements CreateMessageService {
     public Response createTextMessage(Request request, String ans) {
 
         Story story = new Story();
-        ArrayList<String> stories = story.printNames();
+        ArrayList<String> stories = story.getNames();
 
         List<Button> buttons = new ArrayList<>();
         for (String button : stories) {

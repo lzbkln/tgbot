@@ -31,9 +31,9 @@ public class Story implements Page {
 
         try {
             Document document = Jsoup.connect("https://gamesisart.ru/guide/Romance_Club_Prohozhdenie.html").get();
-            Elements el = document.select("center td > a[href]");
-            for (Element e : el) {
-                System.out.println(e.attr("href"));
+            Elements refs = document.select("center td > a[href]");
+            for (Element ref : refs) {
+                System.out.println(ref.attr("href"));
             }
         } catch (Exception e) {
             return null;
@@ -42,11 +42,11 @@ public class Story implements Page {
         return linksNames;
     }
 
-    public ArrayList<String> printNames() {
+    public ArrayList<String> getNames() {
         return new ArrayList<>(makeNames());
     }
 
-    public ArrayList<String> printLinks() {
+    public ArrayList<String> getLinks() {
         return new ArrayList<>(makeLinks());
     }
 
