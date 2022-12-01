@@ -6,9 +6,11 @@ public class TextComponent implements Component {
     public TextComponent(String text) {
         this.text = text;
     }
+
     public TextComponent(TextComponent textComponent) {
         this.text = textComponent.text;
     }
+
     public String getText() {
         return text;
     }

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class InlineButton {
     /**
-     *
      * @param buttons Список кнопок
      * @return Список телеграммовских инлайн-кнопок, каждая на новой строке
      */

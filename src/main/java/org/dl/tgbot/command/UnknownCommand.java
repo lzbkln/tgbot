@@ -11,6 +11,7 @@ public class UnknownCommand implements Command {
     public UnknownCommand(CreateMessageService createMessageService) {
         this.createMessageService = createMessageService;
     }
+
     @Override
     public Response execute(Request request) {
         return createMessageService.createTextMessage(request, Report.UNKNOWN_COMMAND.message);

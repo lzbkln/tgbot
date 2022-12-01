@@ -15,8 +15,7 @@ public class CommandContainer {
 
 
     /**
-     *
-     * @param createReportMessageService Сервис, осуществляющий логику отправки заготовленных фраз
+     * @param createReportMessageService  Сервис, осуществляющий логику отправки заготовленных фраз
      * @param createStoriesMessageService Сервис, осуществляющий логику создания сообщения с историями
      */
     public CommandContainer(CreateMessageService createReportMessageService, CreateStoriesMessageService createStoriesMessageService) {
@@ -31,7 +30,6 @@ public class CommandContainer {
     }
 
     /**
-     *
      * @param commandIdentifier Команда в виде строки
      * @return Команду, соответствующую команде, либо unknownCommand
      */

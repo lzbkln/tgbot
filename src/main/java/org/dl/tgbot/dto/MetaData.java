@@ -9,6 +9,10 @@ public class MetaData implements Component {
         this.userId = message.getFrom().getId();
     }
 
+    public MetaData(Long userId) {
+        this.userId = userId;
+    }
+
     public MetaData(MetaData metaData) {
         this.userId = metaData.userId;
     }

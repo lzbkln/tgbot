@@ -6,7 +6,7 @@ import org.dl.tgbot.parse.Story;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateStoriesMessageService implements CreateMessageService{
+public class CreateStoriesMessageService implements CreateMessageService {
     @Override
     public Response createTextMessage(Request request, String ans) {
 

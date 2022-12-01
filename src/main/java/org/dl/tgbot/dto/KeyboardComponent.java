@@ -8,6 +8,7 @@ public class KeyboardComponent implements Component {
     public KeyboardComponent(List<Button> markup) {
         this.buttons = markup;
     }
+
     public List<Button> getButtons() {
         return buttons;
     }

@@ -12,6 +12,7 @@ public class NoCommand implements Command {
     public NoCommand(CreateMessageService createMessageService) {
         this.createMessageService = createMessageService;
     }
+
     @Override
     public Response execute(Request request) {
         return createMessageService.createTextMessage(request, Report.UNKNOWN_INPUT.message);
