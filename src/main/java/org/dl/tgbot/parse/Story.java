@@ -1,63 +1,53 @@
 package org.dl.tgbot.parse;
-import java.io.*;
-import java.net.URL;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Story implements Page {
     protected static String name;
-    // TODO: переписать парсинг страницы, чтобы не использовался файл
-    public HashMap<String, String> makeDictNames() throws FileNotFoundException {
-        String path = "./src/main/resources/stories";
-        File file = new File(path);
-        Scanner scannerF = new Scanner(file);
-        HashMap<String, String> linkNames = new HashMap<>();
-        while (scannerF.hasNextLine()) {
-            String line = scannerF.nextLine();
-            Pattern pattern = Pattern.compile ("\"(.+?)\"");
-            Matcher matcher = pattern.matcher (line);
-            int i = 0;
-            String[] pair = new String[2];
-            while (matcher.find()) {
-                pair[i] = matcher.group(1);
-                i++;
+
+    public ArrayList<String> makeNames(){
+        ArrayList<String> storiesNames = new ArrayList<>();
+
+        try {
+            Document document = Jsoup.connect("https://gamesisart.ru/guide/Romance_Club_Prohozhdenie.html").get();
+            Elements el = document.select("center td > a img[title]");
+            for (Element e: el) {
+                storiesNames.add(e.attr("title"));
             }
-            linkNames.put(pair[0], pair[1]);
+        }  catch (Exception e) {
         }
-        return linkNames;
+
+        return storiesNames;
     }
 
-    public ArrayList<String> printTitles() throws FileNotFoundException {
-        return new ArrayList<>(makeDictNames().keySet());
+    public ArrayList<String> makeLinks(){
+        ArrayList<String> linksNames = new ArrayList<>();
+
+        try {
+            Document document = Jsoup.connect("https://gamesisart.ru/guide/Romance_Club_Prohozhdenie.html").get();
+            Elements el = document.select("center td > a[href]");
+            for (Element e: el) {
+                System.out.println(e.attr("href"));
+            }
+        }  catch (Exception e) {
+        }
+
+        return linksNames;
+    }
+
+    public ArrayList<String> printNames(){
+        return new ArrayList<>(makeNames());
+    }
+
+    public ArrayList<String> printLinks(){
+        return new ArrayList<>(makeLinks());
     }
 
     public String getPage(String link)  {
-        StringBuilder page = new StringBuilder();
-        BufferedReader in = null;
-        try {
-            URL url = new URL(link);
-            in = new BufferedReader(new InputStreamReader(url.openStream(),"cp1251")); //позволяет создать входной поток для чтения файла ресурса, связанного с созданным объектом класса URL
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                page.append(inputLine);
-            }
-            in.close();
-        }
-        catch (IOException e){
-            System.out.println("IOException");
-        }
-        finally {
-            try{
-                if (in != null){
-                    in.close();
-                }
-            }
-            catch (IOException e){
-                System.out.println("IOException");
-            }
-
-        }
-        return page.toString();
+        return link.toString();
     }
 }

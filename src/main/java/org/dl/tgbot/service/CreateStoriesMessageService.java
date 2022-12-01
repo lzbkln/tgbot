@@ -5,7 +5,6 @@ import org.dl.tgbot.parse.Story;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +18,7 @@ public class CreateStoriesMessageService implements CreateMessageService{
 
         Story story = new Story();
         ArrayList<String> test;
-        try {
-            test = story.printTitles();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        test = story.printNames();
 
         for (String s : test) {
             List<InlineKeyboardButton> rows = new ArrayList<>();
