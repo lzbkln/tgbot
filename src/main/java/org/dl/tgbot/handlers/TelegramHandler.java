@@ -20,10 +20,11 @@ public class TelegramHandler implements Handler {
 
         Response response;
         CommandContainer commandContainer = new CommandContainer(new CreateReportMessageService(), new CreateStoriesMessageService());
+
+        //TODO: переделать
         if (msg == null) {
             response = commandContainer.retrieveCommand(CommandName.NO.getCommandName()).execute(request);
-        }
-        else if (msg.startsWith(COMMAND_PREFIX)) {
+        } else if (msg.startsWith(COMMAND_PREFIX)) {
             String commandIdentifier = msg.split(" ")[0].toLowerCase();
             response = commandContainer.retrieveCommand(commandIdentifier).execute(request);
         } else {

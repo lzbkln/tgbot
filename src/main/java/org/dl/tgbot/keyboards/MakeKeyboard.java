@@ -1,20 +1,15 @@
 package org.dl.tgbot.keyboards;
-import org.dl.tgbot.Main;
+
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dl.tgbot.Constants.PHRASES_FILENAME;
-
-// пока не используй этот класс
 @Deprecated
-public class MakeKeyboard extends Keyboard{
-    public static void createKeyboard(long userId) {
+public class MakeKeyboard {
+    public static void createKeyboard() {
 
-        message.setChatId(userId);
-        message.setText(Main.getPhrase(PHRASES_FILENAME, "message.start", "ru", "RU"));
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyboard = new ArrayList<>();
@@ -25,6 +20,5 @@ public class MakeKeyboard extends Keyboard{
         keyboard.add(row);
 
         keyboardMarkup.setKeyboard(keyboard);
-        message.setReplyMarkup(keyboardMarkup);
     }
 }

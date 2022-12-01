@@ -1,19 +1,14 @@
 package org.dl.tgbot.dto;
 
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import java.util.List;
 
 public class KeyboardComponent implements Component {
-    // TODO: переписать эту компоненту так, чтобы не было привязки к телеграмму,
-    //  возможно, переименовать
+    private final List<Button> buttons;
 
-    // TODO: создать отдельный класс кнопки не привязанной к телеграмму с полями: name, callback
-    // Это нужно, потому что у каждой кнопки может быть свой callback
-    private final InlineKeyboardMarkup markup;
-
-    public KeyboardComponent(InlineKeyboardMarkup markup) {
-        this.markup = markup;
+    public KeyboardComponent(List<Button> markup) {
+        this.buttons = markup;
     }
-    public InlineKeyboardMarkup getMarkup() {
-        return markup;
+    public List<Button> getButtons() {
+        return buttons;
     }
 }
