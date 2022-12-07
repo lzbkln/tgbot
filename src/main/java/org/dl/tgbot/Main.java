@@ -5,10 +5,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class Main {
@@ -24,15 +21,8 @@ public class Main {
     }
 
     public static String getFromProperty(String fileName, String key) {
-        Properties property = new Properties();
-        try (FileInputStream fis =
-                     new FileInputStream("src/main/resources/" + fileName)) {
-            property.load(fis);
-        } catch (IOException e) {
-            throw new RuntimeException("Конфигурационный файл отсутствует", e);
-        }
-
-        return property.getProperty(key);
+        Loader loader = new Loader();
+        return loader.getProperty(fileName, key);
     }
 
     private static void startTgBot() throws TelegramApiException {
