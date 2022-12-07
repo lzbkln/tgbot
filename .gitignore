@@ -7,3 +7,5 @@
 /dataSources/
 /dataSources.local.xml
 /src/main/resources/config.properties
+/target/
+/tgbot.iml

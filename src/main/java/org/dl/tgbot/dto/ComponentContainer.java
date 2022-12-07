@@ -12,8 +12,7 @@ public class ComponentContainer {
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
         for (Component component : components) {
-            if (component.getClass().equals(componentClass))
-                return (T) component;
+            if (component.getClass().equals(componentClass)) return (T) component;
         }
         return null;
     }

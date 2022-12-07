@@ -1,29 +1,39 @@
 package org.dl.tgbot.handlers;
 
-import org.dl.tgbot.dto.MetaData;
-import org.dl.tgbot.dto.Request;
-import org.dl.tgbot.dto.Response;
-import org.dl.tgbot.dto.TextComponent;
+import org.dl.tgbot.command.CommandContainer;
+import org.dl.tgbot.command.CommandName;
+import org.dl.tgbot.dto.*;
+import org.dl.tgbot.service.CreateReportMessageService;
+import org.dl.tgbot.service.CreateStoriesMessageService;
+
+import static org.dl.tgbot.Constants.COMMAND_PREFIX;
+
 
 public class TelegramHandler implements Handler {
+
     @Override
     public Response handleRequest(Request request) {
-        String text;
-        String msg;
-        msg = request.getComponent(TextComponent.class).getText();
+        TextComponent msg;
+        msg = request.getComponent(TextComponent.class);
 
-        if (msg == null) {
-            text = "Мы друг друга не поняли, отправьте текстовое сообщение";
-        } else if (msg.startsWith("/start")) {
-            text = "Привет, я бот, который поможет тебе пройти Клуб Романтики!";
+        Response response;
+        CommandContainer commandContainer = new CommandContainer(new CreateReportMessageService(), new CreateStoriesMessageService());
+
+        if (msg != null) {
+            if (msg.getText().startsWith(COMMAND_PREFIX)) {
+                String commandIdentifier = msg.getText().split(" ")[0].toLowerCase();
+                response = commandContainer.retrieveCommand(commandIdentifier).execute(request);
+            } else {
+                response = commandContainer.retrieveCommand(CommandName.NO.getCommandName()).execute(request);
+            }
         } else {
-            text = msg;
+            response = new Response();
+            response.addComponent(new TextComponent("Button"));
+            response.addComponent(new MetaData(request.getComponent(MetaData.class)));
+            response.addComponent(request.getComponent(CallbackComponent.class));
         }
 
-        Response response = new Response();
-        response.addComponent(new TextComponent(text));
-        response.addComponent(request.getComponent(MetaData.class));
-
         return response;
+
     }
 }
