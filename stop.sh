@@ -1,3 +1,3 @@
 #!/bin/bash
-docker-compose stop
+sudo docker-compose stop
 mvn clean
