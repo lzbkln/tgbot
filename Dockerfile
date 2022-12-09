@@ -77,9 +77,10 @@ RUN set -eux; \
 
 WORKDIR /usr/src/app
 
-ENV BOT_TOKEN=1375780501:AAE4A6Rz0BSnIGzeu896OjQnjzsMEG6_uso
+# default token
+ENV BOT_TOKEN=FakeToken:AAGF2a2k5eLNTVoyK8E5NBbvFJXyEu0o-FE
 
 COPY target/*dependencies.jar app.jar
 
 #CMD ["java", "-jar", "./app.jar"]
-ENTRYPOINT ["java", "-Dbot.token=${BOT_TOKEN}", "-jar", "./app.jar"]
+ENTRYPOINT ["java", "-jar", "./app.jar"]
