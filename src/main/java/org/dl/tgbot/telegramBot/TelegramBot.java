@@ -62,35 +62,13 @@ public class TelegramBot extends TelegramLongPollingBot implements Writer {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() || update.hasCallbackQuery()) {
             System.out.println(update);
+            if (update.hasCallbackQuery()) {
+                System.out.println(update.getCallbackQuery().getData());
+            }
             Request request = converter.convertToRequest(update);
             Response response = telegramHandler.handleRequest(request);
             write(response);
         }
-        /*else if (update.hasCallbackQuery()) {
-            // TODO: перенести обработку в TelegramHandler, проверять там на CallBack и обрабатывать
-            String call_data = update.getCallbackQuery().getData();
-            long message_id = update.getCallbackQuery().getMessage().getMessageId();
-            long chat_id = update.getCallbackQuery().getMessage().getChatId();
-            String callbackQueryId = update.getCallbackQuery().getId();
-
-            AnswerCallbackQuery ansCallback = new AnswerCallbackQuery();
-            ansCallback.setText("Это ответ");
-            ansCallback.setCallbackQueryId(callbackQueryId);
-
-            String answer = "Answer for " + call_data;
-            EditMessageText new_message = new EditMessageText();
-            new_message.setChatId(chat_id);
-            new_message.setMessageId((int) message_id);
-            new_message.setText(answer);
-            try {
-                execute(new_message);
-                execute(ansCallback);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-
-        } */
-
     }
 
     public void write(Response response) {
