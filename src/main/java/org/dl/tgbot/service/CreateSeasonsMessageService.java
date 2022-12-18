@@ -1,6 +1,7 @@
 package org.dl.tgbot.service;
 
 import org.dl.tgbot.dto.*;
+import org.dl.tgbot.parse.Story;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,8 @@ public class CreateSeasonsMessageService implements CreateMessageService{
         //  возможно, seasons должен быть классом, содержащим
         //  в себе номер сезона и ссылку на страницу с сезоном.
         //  а так же название истории, к которой относится сезон
-
-        String [] seasons = {"1 сезон", "2 сезон"}; //getSeasons(nameOfStory)
+        Story story = new Story();
+        ArrayList<String> seasons = story.getSeasons(nameOfStory);
         List<Button> buttons = new ArrayList<>();
         for (String button : seasons) {
             buttons.add(new Button(button, request.getComponent(CallbackComponent.class).getButtonCallbackData() + "/" + button));
