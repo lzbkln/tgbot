@@ -12,10 +12,6 @@ public class CreateSeasonsMessageService implements CreateMessageService{
     public Response createTextMessage(Request request, String nameOfStory) {
         Response response = new Response();
 
-        // TODO: добавить логику вместо тестовых сезонов,
-        //  возможно, seasons должен быть классом, содержащим
-        //  в себе номер сезона и ссылку на страницу с сезоном.
-        //  а так же название истории, к которой относится сезон
         Story story = new Story();
         ArrayList<String> seasons = story.getSeasons(nameOfStory);
         List<Button> buttons = new ArrayList<>();
