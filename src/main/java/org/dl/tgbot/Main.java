@@ -27,7 +27,7 @@ public class Main {
 
     private static void startTgBot() throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        TelegramBot bot = new TelegramBot(Main.getFromProperty("config.properties", "token"), "RomanceClubGuides");
+        TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"), "RomanceClubGuides");
         botsApi.registerBot(bot);
     }
 }

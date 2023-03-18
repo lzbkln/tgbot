@@ -16,7 +16,9 @@ public class TelegramDataConverter {
         if (update.hasMessage()) {
             Message message = update.getMessage();
             request.addComponent(new MetaData(message));
-            request.addComponent(new TextComponent(message.getText()));
+            if (message.getText() != null) {
+                request.addComponent(new TextComponent(message.getText()));
+            }
         } else if (update.hasCallbackQuery()) {
             CallbackQuery callbackQuery = update.getCallbackQuery();
             String callData = callbackQuery.getData();
@@ -32,11 +34,13 @@ public class TelegramDataConverter {
 
     public SendMessage convertFromResponse(Response response) {
         Long who = response.getComponent(MetaData.class).getUserId();
-        InlineKeyboardMarkup markup = null;
+        InlineKeyboardMarkup markup;
 
         if (response.getComponent(KeyboardComponent.class) != null) {
             List<Button> buttonList = response.getComponent(KeyboardComponent.class).getButtons();
             markup = InlineButton.convertFromButton(buttonList);
+        } else {
+            markup = null;
         }
 
         return SendMessage.builder()

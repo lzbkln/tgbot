@@ -1,0 +1,9 @@
+version: '3.1'
+
+services:
+  tgbot:
+    build:
+      context: .
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    restart: always
