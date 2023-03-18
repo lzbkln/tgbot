@@ -6,3 +6,7 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+/src/main/resources/config.properties
+/target/
+/tgbot.iml
+/.env
